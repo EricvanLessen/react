@@ -2,42 +2,71 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Tic-Tac-Toe React Example App 
 
-In the project directory, you can run:
+![Tic-Tac-Toe](tic-tac-toe.png)
 
-### `npm start`
+This is a simple Tic-Tac-Toe example app built using React, demonstrating the basic concepts of React components, state management, and handling user interactions. Players can take turns placing their X or O on the 3x3 grid, and the game will determine the winner or if it's a draw.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Table of Contents
+- [Demo](#demo)
+- [Installation](#installation)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [How to Play](#how-to-play)
+- [Explanation](#explanation)
+- [Contributing](#contributing)
+- [License](#license)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Demo
+You can try out the live demo of the Tic-Tac-Toe app [here](https://example.com/tic-tac-toe-demo).
 
-### `npm test`
+## Installation
+To run the app locally, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository: 
+   ```
+   git clone git@github.com:EricvanLessen/react.git
+   ```
+   
+2. Navigate to the project directory:
+   ```
+   cd tic-tac-toe
+   ```
 
-### `npm run build`
+3. Install the dependencies using npm or yarn:
+   ```
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Start the development server:
+   ```
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. Open your web browser and go to http://localhost:3000 to play the game.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
+- Play Tic-Tac-Toe against another player.
+- Real-time feedback on game status (winner or draw).
+- Option to restart the game after it's over.
+- Simple and intuitive user interface.
 
-### `npm run eject`
+## Technologies Used
+The Tic-Tac-Toe app was built using the following technologies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- React: A JavaScript library for building user interfaces.
+- JavaScript: The primary programming language used for the application logic.
+- HTML/CSS: Used for structuring the app and styling the components.
+- Create React App: A development environment for React applications, providing a convenient setup.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## How to Play
+1. When you open the app, you will see a 3x3 grid representing the Tic-Tac-Toe board.
+2. Player 1 starts the game and places an X on any empty cell by clicking on it.
+3. Then, Player 2 places an O on a different empty cell.
+4. Players take turns until one of them wins by forming a line of three of their symbols either horizontally, vertically, or diagonally.
+5. If all cells are filled and there is no winner, the game ends in a draw.
+6. To start a new game, click the "Restart" button.
 
 ## Learn More
 
@@ -113,3 +142,29 @@ Handling events with react elements is close to handling events with dom element
 ### Lifting state up
 
 We need to create a way for the square component to update the parent board component state, which is private. We pass down a function for this purpose, and indirectly update the board state. We define the function handle click event, it gets i as an argument, then we pass this function down to the squared component as a prop. The button in the square component can then call the function, e.g. for the onClickEvent. 
+
+### Setting state
+
+In the handle click event function, the squares array values can not be set directly. We can not directly mutate the state. We must create an updated copy of the state and use a setter function to state variable. React then registers the change and updates the UI. Step 1: make a copy of the squares state array. Step 2: Mutate the copy. Step 3: Call the setSquares function with the mutated copy. 
+
+### Taking turns and determine the winner
+
+We implement the function that indicates who is next as a boolean flag. We create a helper function that is called after each click to determine who is the winner. We also create checks to handle clicks for a won game and for a click on a field that was already assigned to a player. 
+
+## Contributing
+Contributions to this project are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request. Make sure to follow the project's code of conduct.
+
+1. Fork the repository.
+2. Create a new branch for your changes:
+   ```
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes and push them to your forked repository.
+4. Submit a pull request describing your changes.
+
+## License
+The Tic-Tac-Toe React Example App is open-source and licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute the code as per the terms of the MIT License.
+
+---
+
+Thank you for checking out the Tic-Tac-Toe React Example App! If you have any questions or need further assistance, please feel free to contact us or open an issue in the repository. Enjoy playing!
