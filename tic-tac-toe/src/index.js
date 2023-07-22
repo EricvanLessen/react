@@ -1,81 +1,93 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, {useState} from 'react';
+import ReactDom from 'react-dom';
 import './index.css'
 
-import calculateWinner from './helpers/calculateWinner'
-import Board from './components/board/Board'
-import GameInfo from './components/game-info/GameInfo'
+const Square = (props) => {
+  return (
+    <button className='square'
+    onClick={props.onClickEvent}
+    >
+      {props.value}
+    </button>
+  );
+};
 
-class Game extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      history: [
-        {
-          squares: Array(9).fill(null),
-        },
-      ],
-      stepNumber: 0,
-      xIsNext: true,
+const Board = () => {
+
+  const initialSquares = Array(9).fill('')
+  const [squares, setSquares] = useState(initialSquares);
+  const [xIsNext, SetXIsNext] = useState([true]);
+
+  const handleClickEvent = (i) => {
+    // Make a copy of the state.squares array
+    const newSquares = [...squares];
+    const winnerDeclared = Boolean(calculateWinner(newSquares));
+    const squareFilled = Boolean(newSquares[i])
+    if(winnerDeclared || squareFilled){
+      return;
     }
-  }
+    // Mutate the copy, setting the i-th element to 'X'
+    newSquares[i] = xIsNext ? 'X':'0';
+    // Call the setSquare function with the mutated copy
+    setSquares(newSquares);
+    SetXIsNext(!xIsNext)
+  };
 
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1)
-    const current = history[history.length - 1]
-    const squares = current.squares.slice()
-    if (calculateWinner(squares) || squares[i]) {
-      return
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O'
-    this.setState({
-      history: history.concat([
-        {
-          squares: squares,
-        },
-      ]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    })
-  }
-
-  jumpTo(step) {
-    console.log(step)
-    this.setState({
-      stepNumber: step,
-      xIsNext: step % 2 === 0,
-    })
-  }
-
-  render() {
-    const history = this.state.history
-    const current = history[this.state.stepNumber]
-    const winner = calculateWinner(current.squares)
-    let status
-    if (winner) {
-      status = 'Winner: ' + winner
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
-    }
+  const renderSquare = (i) => {
     return (
-      <React.Fragment>
-        <h1>Tic Tac Toe</h1>
-        <section className="game">
-          <GameInfo
-            status={status}
-            winner={winner}
-            xIsNext={this.state.xIsNext}
-          />
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-            jumpTo={(i) => this.jumpTo(i)}
-          />
-        </section>
-      </React.Fragment>
+      <Square value={squares[i]}
+      onClickEvent = {()=> handleClickEvent(i)}/>
     )
   }
-}
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<Game />)
+  const winner = calculateWinner(squares);
+  const status = winner ? 
+    `Winner: ${winner}`:
+    `Next player: ${xIsNext ? 'X':'0'}`
+
+
+  return (
+    <div>
+      <div className='status'>{status}</div>
+      <div className='board-row'>
+        {renderSquare(0)}{renderSquare(1)}{renderSquare(2)}
+      </div>
+      <div className='board-row'>
+        {renderSquare(3)}{renderSquare(4)}{renderSquare(5)}
+      </div>
+      <div className='board-row'>
+        {renderSquare(6)}{renderSquare(7)}{renderSquare(8)}
+      </div>
+    </div>
+  );
+};
+
+const Game = () => {
+  return (
+    <div className='game'>
+      Tic-Tac-Toe
+      <Board/>
+    </div>
+  );
+};
+
+ReactDom.render(
+  <Game/>,
+  document.getElementById('root')
+)
+
+function calculateWinner(squares) {
+  const lines = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+
+  for (let line of lines){
+    const [a,b,c] = line;
+
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a] // 'X' or 'O'
+    }
+  }
+}
