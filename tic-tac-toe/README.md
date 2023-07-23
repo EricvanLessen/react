@@ -1,8 +1,6 @@
-# React
+## Tic-Tac-Toe React Example App 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-
-## Tic-Tac-Toe React Example App 
 
 This is a simple Tic-Tac-Toe example app built using React, demonstrating the basic concepts of React components, state management, and handling user interactions. Players can take turns placing their X or O on the 3x3 grid, and the game will determine the winner or if it's a draw.
 
